@@ -1,0 +1,69 @@
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 side">
+                <nav class="navbar">
+                    <a class="navbar-brand logo" href="defaut"><img width="35" height="35" src="../public/img/logo.svg"><strong>Sport</strong>Search</a>
+                    <form class="navbar-form navbar-right inline-form" id="div_input_search_web">
+                        <input type="text" id="input_search_web" name="input_search_web">
+                        <img id="img_search" src="../public/img/input_search.png">
+                    </form>
+                    <form class="navbar-form navbar-right inline-form" id="div_input_search">
+                        <input type="text" id="input_search" name="input_search">
+                        <img id="img_search" src="../public/img/input_search.png">
+                    </form>
+                    <ul class="nav navbar-nav menu">
+                        <li><a href="#" id="search"><i class="icon"><img src="../public/img/search.png"></i></a></li>
+                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon" ><img src="../public/img/all.png" class=""></i><p class="label_responsive">Tous les sports</p></a></li>
+                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="../public/img/foot.png" class=""></i><p class="label_responsive">Football</p></a></li>
+                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="../public/img/rugby.png" class=""></i><p class="label_responsive">Rugby</p></a></li>
+                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="../public/img/basket.png" class=""></i><p class="label_responsive">Basket</p></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-10 main" id="bulles">
+            </div>
+            <div class="col-lg-10 main" id="article" style="display: none;">
+                <div class="fond_blanc" style="display: none;width: 100%;height: 100%;position: absolute;z-index: 1;align-content: center;justify-content: center;">
+                    <img src="../public/img/loading.gif" class=".dialog-animation" style="margin: auto;height: 50%;">
+                </div>
+                <div class="ensemble">
+                    <div class="article col-lg-10">
+                        <img src="../public/img/didi.png" class="imgArticle">
+                        <h4>PSG - OM (3-1) : Didier Deschamps réagit sur le comportement de Kylian Mbappé</h4>
+                        <h5 class="content">But! Football Club - Il y a 3 heures 18/03/2019</h5>
+                        <h5 class="ngrams">Mbappé : 20  Neymar : 18  Ligue 1 : 15  Didier Deschamps : 14</h5>
+                    </div>
+                    <div class="article col-lg-10">
+                        <img src="../public/img/didi.png" class="imgArticle">
+                        <h4>PSG - OM (3-1) : Didier Deschamps réagit sur le comportement de Kylian Mbappé</h4>
+                        <h5 class="content">But! Football Club - Il y a 3 heures 18/03/2019</h5>
+                        <h5 class="ngrams">Mbappé : 20  Neymar : 18  Ligue 1 : 15  Didier Deschamps : 14</h5>
+                    </div>
+                    <div class="article col-lg-10">
+                        <img src="../public/img/didi.png" class="imgArticle">
+                        <h4>PSG - OM (3-1) : Didier Deschamps réagit sur le comportement de Kylian Mbappé</h4>
+                        <h5 class="content">But! Football Club - Il y a 3 heures 18/03/2019</h5>
+                        <h5 class="ngrams">Mbappé : 20  Neymar : 18  Ligue 1 : 15  Didier Deschamps : 14</h5>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+
+    
+ 
+
+{% extends 'data.html.twig' %}
+
+{% block title %} Sport | Data Visualisation {% endblock %}
+
+{% block body %}
+
+Vue par défaut où l'on va saisir le mot-clé sur le menu de gauche + les bulles sur le panel du milieu.
+
+{% endblock %}

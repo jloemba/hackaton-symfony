@@ -1,0 +1,24 @@
+
+/* -------- LES POSTS ----------  */
+
+/* Alignement & Marge  */
+.post{
+  margin: 1% 0%;
+}
+
+
+
+/* LES IMAGES  */
+
+/* Photo de profil */
+img.picture-profil{
+  width: 100%;
+}
+
+
+/*  LES TEXTES  */
+
+/*  Les sous-titres */
+p.sub-title{
+  color: grey;
+}
