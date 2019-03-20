@@ -58,12 +58,13 @@
     
  
 
-{% extends 'data.html.twig' %}
-
-{% block title %} Sport | Data Visualisation {% endblock %}
+{% extends 'hello.html.twig' %}
 
 {% block body %}
 
-Vue par défaut où l'on va saisir le mot-clé sur le menu de gauche + les bulles sur le panel du milieu.
-
+    {% for d in data  %}
+         <br>
+         {{ d["ngram"] }} => {{ d["count_articles"] }}
+    {% endfor%}
+         
 {% endblock %}

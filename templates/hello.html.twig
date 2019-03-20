@@ -5,11 +5,12 @@
         <title>{% block title %}Test!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-         {% foreach d in data  %}
-           {{  dump(d) }}
-        {% endforeach %}
+    <body>  
 
+          {% for d in data  %}
+         <br>
+         {{ d["ngram"] }} => {{ d["count_articles"] }}
+    {% endfor%}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

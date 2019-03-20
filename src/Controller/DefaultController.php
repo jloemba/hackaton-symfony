@@ -12,6 +12,7 @@ use Swift_Mailer;
 
 use App\Form\ContactAdminType;
 
+use App\Service\ApiService;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,69 +21,29 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route
  */
 
-
-namespace App\Controller;
-
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-
-
-use Swift_Mailer;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
-use App\Form\SearchType;
-
-
 // C'est quoi extends ? Heritage
 class DefaultController extends AbstractController {
+
+    //Modifier cette route pour avoir les ngrams du topics 'sport' par défaut
     /**
      * @Route(name="app_default_index", path="/", methods={"GET"})
      */
-    public function index(Request $request) {
-        $url = "https://api.ozae.com";
-        $uri= "/gnw/articles?";
-        $date= "date=20180701__20180702";
-        $edition = "&edition=fr-fr";
-        $key = "&key=11116dbf000000000000960d2228e999";
-        $limit = "&hard_limit=500";
-        $topic = "&topic=s";
-        $order = "&order[col]=social_score";
-        // https://api.ozae.com/gnw/ngrams?date=20190103__20190109&limit=20&key=11116dbf000000000000960d2228e999&query=brexit&edition=fr-fr&topic=w
-        $url= $url.$uri.$date.$edition."&".$key.$limit.$topic;
-        $timeout = 10; 
-        
-        $ch = curl_init($url); 
-
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true); 
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
-
-        if (preg_match('`^https://`i', $url)) 
-        { 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
-        } 
-
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-
-        // Récupération du contenu retourné par la requête 
-        $page_content = json_decode(curl_exec($ch), true);
-
-        
-        curl_close($ch); 
-        //print_r($page_content);
-        return $this->render(
-            'hello.html.twig',
-            array('data' => $page_content["articles"])
-        );
-        
+    public function index(ApiService $api) {
+        if($api){
+            $data = $api->mostMentionnedSport();        
+            return $this->render(
+                'hello.html.twig',
+                array('data' => $data)
+            );
+        }else{
+            return $this->render(
+                'hello.html.twig',
+                array('data' => "Bruh")
+            );
+        }        
     }
+
+    //Route pour avoir les resultats d'un requêtes saisie(query)  "/search"
 
   
 }
