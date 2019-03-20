@@ -3,26 +3,6 @@
 // C'est quoi un namespace ?
 namespace App\Controller;
 
-// Inclusion d'une librarie
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-
-use Swift_Mailer;
-
-use App\Form\ContactAdminType;
-
-
-use Symfony\Component\HttpFoundation\Request;
-
-
-/*
- * @Route
- */
-
-
-namespace App\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,16 +15,17 @@ use Swift_Mailer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
+
 use App\Form\SearchType;
 
 
 // C'est quoi extends ? Heritage
-class DefaultController extends AbstractController {
-    /**
-     * @Route(name="app_default_index", path="/", methods={"GET"})
-     */
-    public function index(Request $request) {
-        $url = "https://api.ozae.com";
+class ApiController extends AbstractController {
+
+
+    public function rest(Request $request) {
+
         $uri= "/gnw/articles?";
         $date= "date=20180701__20180702";
         $edition = "&edition=fr-fr";
@@ -53,7 +34,7 @@ class DefaultController extends AbstractController {
         $topic = "&topic=s";
         $order = "&order[col]=social_score";
         // https://api.ozae.com/gnw/ngrams?date=20190103__20190109&limit=20&key=11116dbf000000000000960d2228e999&query=brexit&edition=fr-fr&topic=w
-        $url= $url.$uri.$date.$edition."&".$key.$limit.$topic;
+        $url= $this->url.$uri.$date.$this->edition."&".$this->key.$limit.$topic;
         $timeout = 10; 
         
         $ch = curl_init($url); 
@@ -76,11 +57,7 @@ class DefaultController extends AbstractController {
 
         
         curl_close($ch); 
-        //print_r($page_content);
-        return $this->render(
-            'hello.html.twig',
-            array('data' => $page_content["articles"])
-        );
+        return $this->render($page_content);
         
     }
 
