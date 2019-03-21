@@ -71,13 +71,21 @@ node.append("title")
         return d.Name + ": " + d.Count;
     });
 
-node.append("circle")
+    node.append("a")
+    .attr("xlink:href", function (d) {
+        return "http://localhost:8000/" + d.data.Name;
+    })
+    .attr("class","bubble-link")
+    .append("circle")
     .attr("r", function(d) {
         return d.r;
     })
     .style("fill", "#0054D2");
 
-//Le "mot" le plus mentionné
+    $("a.bubble-link").click(function(event){
+        event.preventDefault();
+      });
+    //Le "mot" le plus mentionné
 node.append("text")
     .attr("dy", ".2em")
     .style("text-anchor", "middle")
@@ -104,7 +112,7 @@ node.append("text")
     .attr("fill", "white");
 
  node.append("text")
- .attr("x", 8)
+     .attr("x", 8)
         .attr("y", ".31em")
         .select("a")    
         .attr("xlink:href", function (d) {
