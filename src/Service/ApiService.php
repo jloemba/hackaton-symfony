@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-// Inclusion d'une librarie
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route
  */
 
-// C'est quoi extends ? Heritage
 class ApiService {
 
     private $url = "https://api.ozae.com";
@@ -32,11 +30,12 @@ class ApiService {
     }
 
     public function getArticlesSport() {
+
         $uri= "/gnw/articles?";
         $date= "date=20180701__20180702";
         $limit = "&hard_limit=500";
         $topic = "&topic=s";
-        //$order = "&order[col]=social_score";
+        
         $url= $this->url.$uri.$date.$this->edition."&".$this->key.$limit.$this->topic;
         
         $ch = curl_init($url); 
@@ -53,8 +52,7 @@ class ApiService {
 
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-
-        // Récupération du contenu retourné par la requête 
+        
         $page_content = json_decode(curl_exec($ch), true);
 
         
@@ -62,9 +60,8 @@ class ApiService {
         return $page_content["articles"];
         
     }
-
-     // Les mots-clés les plus mentionnés dans le sport
-     public function mostMentionnedSport(){
+    
+    public function mostMentionnedSport(){
         $uri= "/gnw/ngrams?";
         $date= "date=20190103__20190109";
         $edition = "&edition=fr-fr";
@@ -89,17 +86,15 @@ class ApiService {
         } 
 
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        // Récupération du contenu retourné par la requête 
         $page_content = json_decode(curl_exec($ch), true);
         
         curl_close($ch); 
         return $page_content["ngrams"]; 
     }
-
-     // Les articles obtenus suite à une recherche
-     public function getArticlesByQuery(){
+    
+    public function getArticlesByQuery(){
 
         $uri= "/gnw/articles?";
         $date= "date=20190103__20190109";
@@ -167,7 +162,7 @@ class ApiService {
 
         // Récupération du contenu retourné par la requête 
         $page_content = json_decode(curl_exec($ch), true);
-        
+        // $this->debug($page_content,true);
         curl_close($ch); 
         return $page_content; 
         
@@ -210,6 +205,7 @@ class ApiService {
     public function getBulles($mot = ''){
         
         $articles = $this->getArticleTexted($mot)['articles'];
+        
         $i = 1;
         $social_score = 0;
         $tab_ngrams = $tab_unique_ngram = $tab_bulles_info = $tab_bulles = [];
@@ -263,7 +259,7 @@ class ApiService {
             
             if( round($sum_score / sizeof($social_value)) > 500 ){
                 $tab_bulles[] = [
-                    'ngram' => $keyinfos,
+                    'Name' => $keyinfos,
                     'social_score' => round($sum_score / sizeof($social_value))
                 ];
             }

@@ -61,13 +61,4 @@
     </div>
 </body>
 
-{% extends 'hello.html.twig' %}
-
-{% block body %}
-
-    {% for d in data  %}
-         <br>
-         {{ d["ngram"] }} => {{ d["count_articles"] }}
-    {% endfor%}
-
 {% endblock %}

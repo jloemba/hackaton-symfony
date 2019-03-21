@@ -7,6 +7,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Swift_Mailer;
 
@@ -31,20 +32,33 @@ class DefaultController extends AbstractController {
     public function index(ApiService $api) {
         
 
-        $api->debug(($api->getBulles ('psg')),true);
+        // $api->debug(($api->getBulles ('psg')),true);
 
         if($api){
             $data = $api->mostMentionnedSport();        
             return $this->render(
-                'hello.html.twig',
+                'views/home.html.twig',
                 array('data' => $data)
             );
         }else{
             return $this->render(
-                'hello.html.twig',
+                'views/home.html.twig',
                 array('data' => "Bruh")
             );
         }        
     }
+
+    /** 
+     * @Route("/bubble/load")
+     */ 
+    public function ajaxAction(Request $request, ApiService $api) {
+        
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+            
+            $dataPhp = $api->getBulles($_POST['motCle']);
+                    
+            return new JsonResponse($dataPhp); 
+        }
+    }  
     
 }

@@ -24,19 +24,20 @@ if(d3){
     console.log("Il n'est pas là");
 }
 
+function bulle(data){
+    
 dataset = {
     //<?php =json_encode($dataset)?> // don't forget to sanitize
-    "children":   [
-                    {"Name":"psg" ,"Count": 200},
-                    {"Name":"neymar" ,"Count": 158},
-                    {"Name":"didier" ,"Count": 55},
-                    {"Name":"matuidi" ,"Count": 56},
-                    {"Name":"15 de france" ,"Count": 257},
-                    {"Name":"Triathlon" ,"Count": 35}
-                 ]
+    // "children":   [
+    //                 {"Name":"psg" ,"Count": 200},
+    //                 {"Name":"neymar" ,"Count": 158},
+    //                 {"Name":"didier" ,"Count": 55},
+    //                 {"Name":"matuidi" ,"Count": 56},
+    //                 {"Name":"15 de france" ,"Count": 257},
+    //                 {"Name":"Triathlon" ,"Count": 35}
+    //              ]
+    "children":   data
 };
-
-console.log(d3.schemeCategory20);
 
 var diameter = 600;
 //var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -52,7 +53,7 @@ var svg = d3.select("#bulle")
     .attr("class", "bubble");
 
 var nodes = d3.hierarchy(dataset)
-    .sum(function(d) { return d.Count; });
+    .sum(function(d) { return d.social_score; });
 
 var node = svg.selectAll(".node")
     .data(bubble(nodes).descendants())
@@ -68,7 +69,7 @@ var node = svg.selectAll(".node")
 
 node.append("title")
     .text(function(d) {
-        return d.Name + ": " + d.Count;
+        return d.Name + ": " + d.social_score;
     });
 
 node.append("circle")
@@ -95,7 +96,7 @@ node.append("text")
     .attr("dy", "1.3em")
     .style("text-anchor", "middle")
     .text(function(d) {
-        return d.data.Count;
+        return d.data.social_score;
     })
     .attr("font-family",  "Gill Sans", "Gill Sans MT")
     .attr("font-size", function(d){
@@ -118,3 +119,39 @@ node.append("text")
 
 d3.select(self.frameElement)
     .style("height", diameter + "px");
+    }
+    
+    $("#img_search").on("click", function(event){
+
+    var val_input = $('#input_search_web').val();
+    
+    $.ajax({  
+       url:        '/bubble/load',  
+       type:       'POST',   
+       dataType:   'json',  
+       async:      true,
+       data : { 'motCle' : val_input}  ,
+       
+       success: function(data, status) {  
+            bulle(data);   
+        console.log(data);return;
+          var e = $('<tr><th>Name</th><th>Address</th></tr>');  
+          $('#student').html('');  
+          $('#student').append(e);  
+          
+          for(i = 0; i < data.length; i++) {  
+             student = data[i];  
+             var e = $('<tr><td id = "name"></td><td id = "address"></td></tr>');
+             
+             $('#name', e).html(student['name']);  
+             $('#address', e).html(student['address']);  
+             $('#student').append(e);  
+          }  
+       },  
+       error : function(xhr, textStatus, errorThrown) {  
+          alert('Ajax request failed.');  
+       }  
+    });  
+ }); 
+
+
