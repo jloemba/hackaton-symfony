@@ -55,7 +55,6 @@ class DefaultController extends AbstractController {
         
         //dump($request->get('query'));
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
-            
 
             if($request->get('motCle')!=null  && $api->getBulles($request->get('motCle'))){
                 $dataPhp = $api->getBulles($request->get('motCle'));
