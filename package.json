@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "d3": "^5.9.2",
-        "encore": "^0.0.30-beta"
+        "encore": "^0.0.30-beta",
+        "jquery": "^3.3.1"
     }
 }

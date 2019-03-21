@@ -11,8 +11,8 @@ require('../css/app.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
  const $ = require('jquery');
+ 
  var d3 = require('d3');
-
 
 //var greet = require('.//greet');
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
