@@ -14,12 +14,21 @@ const $ = require('jquery');
  
 var d3 = require('d3');
 
-// var fond_blanc = document.getElementsByClassName('fond_blanc');
+//var fond_blanc = document.getElementsByClassName('fond_blanc');
 
-// $(document).bind({
+// $(document).on({
     
 //     ajaxStart: function () {
-//         $(fond_blanc).css("display", "flex");
+        
+//         $('.fond_blanc').css("display", "flex");
+//         $('.fond_blanc').css("width", "100%");
+//         $('.fond_blanc').css("height", "100%");
+//         $('.fond_blanc').css("position", "absolute");
+//         $('.fond_blanc').css("z-index", "1");
+//         $('.fond_blanc').css("align-content", "center");
+//         $('.fond_blanc').css("justify-content", "center");
+//         $('.dialog-animation').css("height", "50%");
+//         $('.dialog-animation').css("margin", "auto");
 //     },
 //     ajaxStop: function () {
 //         $('.dialog-animation').css("display", "none");
@@ -36,8 +45,11 @@ var d3 = require('d3');
 //         type:       'POST',   
 //         dataType:   'json',  
 //         async:      true,
-        
-//         success: function(data, status) {  
+//         beforeSend : function() {
+//             console.log('ajax en cours ...');
+//         },
+//         success: function(data, status) {
+//             console.log('ajax fini');  
 //             bulle(data);
 //         },  
 //         error : function(xhr, textStatus, errorThrown) {  
@@ -147,9 +159,13 @@ $("#img_search").on("click", function(event){
        dataType:   'json',  
        async:      true,
        data : { 'motCle' : val_input}  ,
-       
-       success: function(data, status) {  
-            bulle(data);
+    //    beforeSend : function() {
+    //     console.log('ajax en cours ...');
+    // },
+       success: function(data, status) {
+           if( data.length != 0 ){
+                bulle(data);
+           }
        },  
        error : function(xhr, textStatus, errorThrown) {  
           alert('Ajax request failed.');  
