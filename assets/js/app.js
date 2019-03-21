@@ -26,6 +26,8 @@ if(d3){
 
 function bulle(data){
     
+    $("#bulle").html('');
+
 dataset = {
     //<?php =json_encode($dataset)?> // don't forget to sanitize
     // "children":   [
