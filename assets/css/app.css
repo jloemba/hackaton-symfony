@@ -25,7 +25,9 @@ p{
   left: 0;
   padding-top: 20px;
   background-color: #EFEFEF;
-  border-right: thick solid #021B79;
+  border-right: solid 1px #021B79;
+  height: 90%;
+  margin-top: 35px;
 }
 
 .side a {
@@ -119,6 +121,16 @@ a:hover {
 /* Nouvelles règles si la fenêtre fait au plus 1024px de large */
 @media screen and (max-width: 1024px)
 {
+	h4{
+		font-size: 1rem;
+		font-weight: bolder;
+	}
+
+	h5{
+		font-size: 1rem;
+	}
+
+
     .navbar {
        position:fixed;
         left:0px;
@@ -128,7 +140,9 @@ a:hover {
         background-color: #EFEFEF;
         overflow: auto;
         white-space: nowrap;
-        border-top: thick solid #021B79;
+        border-top: solid 1px #021B79;
+        width: 80%;
+        margin-left: 35px;
     }
     
     .menu{
@@ -182,10 +196,7 @@ a:hover {
         height: 40px;
     }
 
-    img{
-        width: 20px;
-        height: 20px;
-    }
+    
 
     .navbar-form{
         display: none;
@@ -221,12 +232,17 @@ a:hover {
     }
 
     .ensemble{
-        margin-left: 12%;
-        padding: 3rem;
+        margin-left: 15%;
+        padding: 0;
+        padding-top: 1rem;
     }
 
     .article{
         width: 100%;
+    }
+
+    .imgArticle{
+    	display: none;
     }
     
 }
