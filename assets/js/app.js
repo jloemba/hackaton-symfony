@@ -36,6 +36,7 @@ dataset = {
                  ]
 };
 
+console.log(dataset);
 
 var diameter = 600;
 //var color = d3.scaleOrdinal(d3.schemeCategory20);
