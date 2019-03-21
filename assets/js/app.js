@@ -67,7 +67,7 @@ var node = svg.selectAll(".node")
 
     //Avoir le cercle qui forme la bulle en bleu avec un lien href.
     node.append("a")
-    .attr("xlink:href", function (d) {
+    .attr("xlink:href", function (d){
         return d.data.Name;
     })
     .attr("class","bubble-link")
@@ -158,7 +158,7 @@ node.append("text")
         .attr("xlink:href", function (d) {
             return "http://example.com/" + d.data.Link;
         })
-        .text(function (d) {
+        .text(function (d) {li
             return d.data.Name.substring(0, d.r / 3);
         });
 
@@ -191,3 +191,21 @@ d3.select(self.frameElement)
  }); 
 
 
+
+ $('ul li a').click(function(event){
+    event.preventDefault();
+    
+
+    $.ajax({  
+        url:        $(this).attr('href'),  
+        type:       'GET',   
+        dataType:   'json',  
+        
+        success: function(data, status) {  
+             bulle(data);     
+        },  
+        error : function(xhr, textStatus, errorThrown) {  
+           alert('Ajax request failed.');  
+        }  
+     }); 
+});

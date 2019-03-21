@@ -49,15 +49,24 @@ class DefaultController extends AbstractController {
     }
 
     /** 
-     * @Route("/bubble/load")
+     * @Route(name="app_bubble_load", path="/bubble/load/{query}", methods={"GET","POST"})
      */ 
-    public function ajaxAction(Request $request, ApiService $api) {
+    public function ajaxAction(Request $request, ApiService $api,$query=null) {
         
+        //dump($request->get('query'));
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             
-            $dataPhp = $api->getBulles($_POST['motCle']);
+
+            if($request->get('motCle')!=null  && $api->getBulles($request->get('motCle'))){
+                $dataPhp = $api->getBulles($request->get('motCle'));
                     
-            return new JsonResponse($dataPhp); 
+                return new JsonResponse($dataPhp);
+            }else{
+                dump($request->get('query'));
+                $dataPhp = $api->getBulles($request->get('query'));
+                return new JsonResponse($dataPhp);
+            }
+             
         }
     }  
 

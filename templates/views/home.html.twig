@@ -16,15 +16,15 @@
                     </form>
                     <ul class="nav navbar-nav menu">
                         <li><a href="#" id="search"><i class="icon"><img src="{{ asset('build/Search.svg') }}"></i></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/all.png') }}" class=""></i><p class="label_responsive">Tous les sports</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Football.svg') }}" class=""></i><p class="label_responsive">Football</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Rugby.svg') }}" class=""></i><p class="label_responsive">Rugby</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Basket.svg') }}" class=""></i><p class="label_responsive">Basket</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Tennis.svg') }}" class=""></i><p class="label_responsive">Tennis</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/F1.svg') }}" class=""></i><p class="label_responsive">F1</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Moto.svg') }}" class=""></i><p class="label_responsive">Moto</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Volley.svg') }}" class=""></i><p class="label_responsive">Volley</p></a></li>
-                        <li><a href="#" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Golf.svg') }}" class=""></i><p class="label_responsive">Golf</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'foot'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/all.png') }}" class=""></i><p class="label_responsive">Tous les sports</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'Football'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Football.svg') }}" class=""></i><p class="label_responsive">Football</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'Rugby'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Rugby.svg') }}" class=""></i><p class="label_responsive">Rugby</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'Basket'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Basket.svg') }}" class=""></i><p class="label_responsive">Basket</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'Tennis'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Tennis.svg') }}" class=""></i><p class="label_responsive">Tennis</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'F1'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/F1.svg') }}" class=""></i><p class="label_responsive">F1</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'Moto'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Moto.svg') }}" class=""></i><p class="label_responsive">Moto</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'Volley'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Volley.svg') }}" class=""></i><p class="label_responsive">Volley</p></a></li>
+                        <li><a href="{{ path('app_bubble_load',{'query':'Golf'}) }}" style="display:flex; align-items:center;"><i class="icon"><img src="{{ asset('build/Golf.svg') }}" class=""></i><p class="label_responsive">Golf</p></a></li>
                     </ul>
                 </nav>
             </div>
