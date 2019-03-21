@@ -27,16 +27,15 @@ if(d3){
 dataset = {
     //<?php =json_encode($dataset)?> // don't forget to sanitize
     "children":   [
-                    {"Name":"psg" ,"Count": 200},
-                    {"Name":"neymar" ,"Count": 158},
-                    {"Name":"didier" ,"Count": 55},
-                    {"Name":"matuidi" ,"Count": 56},
-                    {"Name":"15 de france" ,"Count": 257},
-                    {"Name":"Triathlon" ,"Count": 35}
+                    {"Name":"psg" ,"Count": 200,"flag":0},
+                    {"Name":"neymar" ,"Count": 158,"flag":0},
+                    {"Name":"didier" ,"Count": 55,"flag":0},
+                    {"Name":"matuidi" ,"Count": 56,"flag":0},
+                    {"Name":"15 de france" ,"Count": 257,"flag":0},
+                    {"Name":"Triathlon" ,"Count": 35,"flag":0}
                  ]
 };
 
-console.log(d3.schemeCategory20);
 
 var diameter = 600;
 //var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -66,25 +65,53 @@ var node = svg.selectAll(".node")
         return "translate(" + d.x + "," + d.y + ")";
     });
 
-node.append("title")
+    node.append("title")
     .text(function(d) {
         return d.Name + ": " + d.Count;
     });
 
+    //Avoir le cercle qui forme la bulle en bleu avec un lien href.
     node.append("a")
     .attr("xlink:href", function (d) {
         return "http://localhost:8000/" + d.data.Name;
     })
     .attr("class","bubble-link")
+    .attr("d",0)
     .append("circle")
     .attr("r", function(d) {
         return d.r;
     })
     .style("fill", "#0054D2");
 
+
+    //Pour éviter que le clique sur la bulle change de page
     $("a.bubble-link").click(function(event){
         event.preventDefault();
-      });
+    });
+
+    $("svg.bubble").css("display","flex"); //Le conteneur des bulles
+    //$("").css("display","block"); //Le conteneur des bulles
+    $("button.link-return").css("display","none");
+
+    //Le flag de la bulle 
+    $("a.bubble-link").click(function(d){
+        if($(this)[0].getAttribute("d")==0){ //SI 0 => Les bulles réapparaîssent
+            $(this)[0].setAttribute("d",1);
+            $("svg.bubble").css("display","none");
+            $("button.link-return").css("display","block");
+            $("button.link-return").click(function(d){
+                $("svg.bubble").css("display","block");
+                $(this).css("display","none");
+            });
+
+
+        }else{ //SI 1 => Les bulles disparaîssent , le bouton revenir au bulle apparaît
+            $(this)[0].setAttribute("d",0);
+            $("svg.bubble").css("display","flex");
+            $("button.link-return").css("display","none");
+        }   
+    });
+
     //Le "mot" le plus mentionné
 node.append("text")
     .attr("dy", ".2em")
