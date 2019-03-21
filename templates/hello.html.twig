@@ -12,7 +12,9 @@
          {{ d["ngram"] }} => {{ d["count_articles"] }}
     {% endfor%}
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('accueil') }}
+        {% endblock %}
     </body>
 </html>
 

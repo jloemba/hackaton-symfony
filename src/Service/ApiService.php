@@ -268,10 +268,16 @@ class ApiService {
                 ];
             }
         }
-        
-        $this->debug($tab_bulles,true);
-        $this->debug($tab_bulles_info,true);
+
+        return $tab_bulles;
     }
+
+    public function getArticles(){
+
+
+        
+    }
+
 
     public function debug($param, $die = false){
         

@@ -31,7 +31,7 @@ class DefaultController extends AbstractController {
     public function index(ApiService $api) {
         
 
-        var_dump($api->getBulles ('psg'));die();
+        $api->debug(($api->getBulles ('psg')),true);
 
         if($api){
             $data = $api->mostMentionnedSport();        
@@ -46,8 +46,5 @@ class DefaultController extends AbstractController {
             );
         }        
     }
-
-    //Route pour avoir les resultats d'un requêtes saisie(query)  "/search"
-
-  
+    
 }
