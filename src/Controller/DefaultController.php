@@ -29,6 +29,10 @@ class DefaultController extends AbstractController {
      * @Route(name="app_default_index", path="/", methods={"GET"})
      */
     public function index(ApiService $api) {
+        
+
+        var_dump($api->getBulles ('psg'));die();
+
         if($api){
             $data = $api->mostMentionnedSport();        
             return $this->render(
