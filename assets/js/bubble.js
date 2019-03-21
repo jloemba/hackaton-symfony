@@ -1,21 +1,4 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you require will output into a single css file (app.css in this case)
-require('../bootstrap/css/bootstrap.min.css');
-require('../css/app.css');
-
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
- const $ = require('jquery');
- var d3 = require('d3');
-
-
-//var greet = require('.//greet');
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+var d3 = require('d3');
 
 if(d3){
     console.log("Il est là");
@@ -36,16 +19,14 @@ dataset = {
                  ]
 };
 
-console.log(d3.schemeCategory20);
-
 var diameter = 600;
-//var color = d3.scaleOrdinal(d3.schemeCategory20);
+var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var bubble = d3.pack(dataset)
     .size([diameter, diameter])
     .padding(1.5);
 
-var svg = d3.select("#bulle")
+var svg = d3.select("body")
     .append("svg")
     .attr("width", diameter)
     .attr("height", diameter)

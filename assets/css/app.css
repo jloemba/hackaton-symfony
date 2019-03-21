@@ -61,6 +61,8 @@ a:hover {
   margin-left: 16.5%;
   font-size: 0.6rem;
   padding: 0px 10px;
+  display: flex;
+  margin-top: 10%;
 }
 
 .ensemble{
