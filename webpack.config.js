@@ -33,9 +33,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('bubble-library', './assets/js/d3.min.js')
     .addEntry('bubble', './assets/js/bubble.js')
-
-
-
+    
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

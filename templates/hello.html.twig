@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Test!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>  
+
+          {% for d in data  %}
+         <br>
+         {{ d["ngram"] }} => {{ d["count_articles"] }}
+    {% endfor%}
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('bubble') }}
+        {% endblock %}
+    </body>
+</html>
+

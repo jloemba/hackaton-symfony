@@ -11,8 +11,8 @@ require('../css/app.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
  const $ = require('jquery');
+ 
  var d3 = require('d3');
-
 
 //var greet = require('.//greet');
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
@@ -24,19 +24,22 @@ if(d3){
     console.log("Il n'est pas là");
 }
 
+function bulle(data){
+    
+    $("#bulle").html('');
+
 dataset = {
     //<?php =json_encode($dataset)?> // don't forget to sanitize
-    "children":   [
-                    {"Name":"psg" ,"Count": 200,"flag":0},
-                    {"Name":"neymar" ,"Count": 158,"flag":0},
-                    {"Name":"didier" ,"Count": 55,"flag":0},
-                    {"Name":"matuidi" ,"Count": 56,"flag":0},
-                    {"Name":"15 de france" ,"Count": 257,"flag":0},
-                    {"Name":"Triathlon" ,"Count": 35,"flag":0}
-                 ]
+    // "children":   [
+    //                 {"Name":"psg" ,"Count": 200},
+    //                 {"Name":"neymar" ,"Count": 158},
+    //                 {"Name":"didier" ,"Count": 55},
+    //                 {"Name":"matuidi" ,"Count": 56},
+    //                 {"Name":"15 de france" ,"Count": 257},
+    //                 {"Name":"Triathlon" ,"Count": 35}
+    //              ]
+    "children":   data
 };
-
-console.log(dataset);
 
 var diameter = 600;
 //var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -52,7 +55,7 @@ var svg = d3.select("#bulle")
     .attr("class", "bubble");
 
 var nodes = d3.hierarchy(dataset)
-    .sum(function(d) { return d.Count; });
+    .sum(function(d) { return d.social_score; });
 
 var node = svg.selectAll(".node")
     .data(bubble(nodes).descendants())
@@ -68,7 +71,7 @@ var node = svg.selectAll(".node")
 
     node.append("title")
     .text(function(d) {
-        return d.Name + ": " + d.Count;
+        return d.Name + ": " + d.social_score;
     });
 
     //Avoir le cercle qui forme la bulle en bleu avec un lien href.
@@ -131,7 +134,7 @@ node.append("text")
     .attr("dy", "1.3em")
     .style("text-anchor", "middle")
     .text(function(d) {
-        return d.data.Count;
+        return d.data.social_score;
     })
     .attr("font-family",  "Gill Sans", "Gill Sans MT")
     .attr("font-size", function(d){
@@ -154,3 +157,26 @@ node.append("text")
 
 d3.select(self.frameElement)
     .style("height", diameter + "px");
+    }
+    
+    $("#img_search").on("click", function(event){
+
+    var val_input = $('#input_search_web').val();
+    
+    $.ajax({  
+       url:        '/bubble/load',  
+       type:       'POST',   
+       dataType:   'json',  
+       async:      true,
+       data : { 'motCle' : val_input}  ,
+       
+       success: function(data, status) {  
+            bulle(data);     
+       },  
+       error : function(xhr, textStatus, errorThrown) {  
+          alert('Ajax request failed.');  
+       }  
+    });  
+ }); 
+
+
