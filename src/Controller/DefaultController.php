@@ -53,9 +53,15 @@ class DefaultController extends AbstractController {
      */ 
     public function ajaxAction(Request $request, ApiService $api) {
         
+        $motCle = '';
+
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             
-            $dataPhp = $api->getBulles($_POST['motCle']);
+            if( isset( $_POST['motCle'] ) ){
+                $motCle = $_POST['motCle'];
+            }
+
+            $dataPhp = $api->getBulles($motCle);
                     
             return new JsonResponse($dataPhp); 
         }
