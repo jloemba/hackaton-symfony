@@ -29,15 +29,6 @@ function bulle(data){
     $("#bulle").html('');
 
 dataset = {
-    //<?php =json_encode($dataset)?> // don't forget to sanitize
-    // "children":   [
-    //                 {"Name":"psg" ,"Count": 200},
-    //                 {"Name":"neymar" ,"Count": 158},
-    //                 {"Name":"didier" ,"Count": 55},
-    //                 {"Name":"matuidi" ,"Count": 56},
-    //                 {"Name":"15 de france" ,"Count": 257},
-    //                 {"Name":"Triathlon" ,"Count": 35}
-    //              ]
     "children":   data
 };
 
@@ -77,7 +68,7 @@ var node = svg.selectAll(".node")
     //Avoir le cercle qui forme la bulle en bleu avec un lien href.
     node.append("a")
     .attr("xlink:href", function (d) {
-        return "http://localhost:8000/" + d.data.Name;
+        return d.data.Name;
     })
     .attr("class","bubble-link")
     .attr("d",0)
@@ -95,11 +86,12 @@ var node = svg.selectAll(".node")
 
     $("svg.bubble").css("display","flex"); //Le conteneur des bulles
     //$("").css("display","block"); //Le conteneur des bulles
-    $("button.link-return").css("display","none");
+    //$("button.link-return").css("display","none");
 
     //Le flag de la bulle 
-    $("a.bubble-link").click(function(d){
+    $("a.bubble-link").click(function(d){ // Le clic sur les bulles
         if($(this)[0].getAttribute("d")==0){ //SI 0 => Les bulles réapparaîssent
+
             $(this)[0].setAttribute("d",1);
             $("svg.bubble").css("display","none");
             $("button.link-return").css("display","block");
@@ -108,6 +100,23 @@ var node = svg.selectAll(".node")
                 $(this).css("display","none");
             });
 
+            // L'appel AJAX
+            $.ajax({  
+                url:        '/bubble/load',  
+                type:       'POST',   
+                dataType:   'json',  
+                async:      true,
+                data : { 'motCle' : val_input,
+                         'flag' : flag}  ,
+                
+                success: function(data, status) {  
+                     bulle(data);     
+                },  
+                error : function(xhr, textStatus, errorThrown) {  
+                   alert('Ajax request failed.');  
+                }  
+             });  
+            
 
         }else{ //SI 1 => Les bulles disparaîssent , le bouton revenir au bulle apparaît
             $(this)[0].setAttribute("d",0);
@@ -162,13 +171,15 @@ d3.select(self.frameElement)
     $("#img_search").on("click", function(event){
 
     var val_input = $('#input_search_web').val();
+    var flag = 0;
     
     $.ajax({  
        url:        '/bubble/load',  
        type:       'POST',   
        dataType:   'json',  
        async:      true,
-       data : { 'motCle' : val_input}  ,
+       data : { 'motCle' : val_input,
+                'flag' : flag}  ,
        
        success: function(data, status) {  
             bulle(data);     
