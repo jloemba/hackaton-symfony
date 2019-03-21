@@ -257,11 +257,12 @@ class ApiService {
                 $sum_score = $sum_score + $score;
             }
             
+            
             if( round($sum_score / sizeof($social_value)) > 500 ){
                 $tab_bulles[] = [
                     'Name' => $keyinfos,
                     'social_score' => round($sum_score / sizeof($social_value)),
-                    'flag' => $_POST['flag']
+                    'flag' =>  isset($_POST['flag'])?$_POST['flag'] :0
                 ];
             }
         }
