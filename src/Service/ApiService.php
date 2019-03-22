@@ -27,73 +27,67 @@ class ApiService {
 
     public function __construct(){
 
-    }
+    }   
 
-    public function getArticlesSport() {
-
-        $uri= "/gnw/articles?";
-        $date= "date=20180701__20180702";
-        $limit = "&hard_limit=500";
-        $topic = "&topic=s";
-        
-        $url= $this->url.$uri.$date.$this->edition."&".$this->key.$limit.$this->topic;
-        
+    //Une méthode pour factoriser le paramètrage de curl
+    public function getCurlInit($url){
         $ch = curl_init($url); 
         $timeout =10;
         curl_setopt($ch, CURLOPT_FRESH_CONNECT, true); 
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
-
         if (preg_match('`^https://`i', $url)) 
         { 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
         } 
-
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        return $ch;
+    }
+
+    /* 
+    *   La liste de tout les articles à propos du sport
+    *
+    */
+ 
+    public function getArticlesSport() {
+
+        $uri= "/gnw/articles?";
+        $date= "date=20180701__20180702";
+        $limit = "&hard_limit=500";
+        
+        $url= $this->url.$uri.$date.$this->edition."&".$this->key.$limit.$this->topic;
+        
+        $ch = $this->getCurlInit($url); 
         
         $page_content = json_decode(curl_exec($ch), true);
-
         
         curl_close($ch); 
         return $page_content["articles"];
         
     }
     
+    //La liste des ngram d'un topic 
     public function mostMentionnedSport(){
         $uri= "/gnw/ngrams?";
         $date= "date=20190103__20190109";
-        $edition = "&edition=fr-fr";
-        $key = "&key=11116dbf000000000000960d2228e999";
         $limit = "&hard_limit=500";
-        $topic = "&topic=s";
-        $order = "&order[col]=social_score";
-        $url= $this->url.$uri.$date.$limit."&".$this->key.$topic;
+
+        $url= $this->url.$uri.$date.$limit."&".$this->key.$this->topic;
         
         $timeout = 10; 
         
-        $ch = curl_init($url); 
-
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true); 
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
-
-        if (preg_match('`^https://`i', $url)) 
-        { 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
-        } 
-
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $page_content = json_decode(curl_exec($ch), true);
+        $ch = $this->getCurlInit($url); 
         
+        // Récupération du contenu retourné par la requête 
+        $page_content = json_decode(curl_exec($ch), true);
+
         curl_close($ch); 
         return $page_content["ngrams"]; 
     }
     
+    //La liste des articles en saissant un mot précis
     public function getArticlesByQuery(){
 
         $uri= "/gnw/articles?";
@@ -104,20 +98,7 @@ class ApiService {
         $url= $this->url.$uri.$date."&".$this->key.$this->edition.$query.$limit;
         $timeout = 10; 
         
-        $ch = curl_init($url); 
-
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true); 
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
-
-        if (preg_match('`^https://`i', $url)) 
-        { 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
-        } 
-
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        $ch = $this->getCurlInit($url); 
 
         // Récupération du contenu retourné par la requête 
         $page_content = json_decode(curl_exec($ch), true);
@@ -141,24 +122,11 @@ class ApiService {
             $mot = "&query=".$mot;
         }
         
-        $url= $this->url.$uri.$date.$key.$edition.$limit.$topic.$mot;
+        $url= $this->url.$uri.$date.$this->key.$this->edition.$limit.$this->topic.$mot;
         
         $timeout = 10; 
         
-        $ch = curl_init($url);
-
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true); 
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
-
-        if (preg_match('`^https://`i', $url)) 
-        { 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
-        } 
-
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        $ch = $this->getCurlInit($url); 
 
         // Récupération du contenu retourné par la requête 
         $page_content = json_decode(curl_exec($ch), true);
@@ -168,6 +136,7 @@ class ApiService {
         
     }
     
+    //Avoir les infos d'un seul article
     public function getSingleArticle($id_article){
         
         $uri= "/gnw/article/";
@@ -179,20 +148,8 @@ class ApiService {
         $url= $this->url.$uri.$id_article.$this->key;
         $timeout = 10;
         
-        $ch = curl_init($url);
-        
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true); 
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
-
-        if (preg_match('`^https://`i', $url)) 
-        { 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
-        } 
-
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        $ch = $this->getCurlInit($url); 
+ 
 
         // Récupération du contenu retourné par la requête 
         $page_content = json_decode(curl_exec($ch), true);
@@ -202,6 +159,7 @@ class ApiService {
         
     }
     
+    //Avoir , à partir d'un mot saisi , les ngrams de ce dernier.
     public function getBulles($mot = ''){
         
         $articles = $this->getArticleTexted($mot)['articles'];
@@ -277,14 +235,6 @@ class ApiService {
     }
 
 
-    public function debug($param, $die = false){
-        
-        echo '<pre>' ;
-        print_r($param);
-        echo '</pre>';
-        if( $die == true ){
-            die();
-        }
-    }
+
     
 }
