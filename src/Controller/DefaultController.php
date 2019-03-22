@@ -1,6 +1,5 @@
 <?php
 
-// C'est quoi un namespace ?
 namespace App\Controller;
 
 // Inclusion d'une librarie
@@ -22,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route
  */
 
-// C'est quoi extends ? Heritage
 class DefaultController extends AbstractController {
 
     //Modifier cette route pour avoir les ngrams du topics 'sport' par défaut
