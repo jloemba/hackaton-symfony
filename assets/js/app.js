@@ -231,6 +231,12 @@ node.append("text")
             
     d3.select(self.frameElement)
     .style("height", diameter + "px");
+    
+    $('g').click(function(event){
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
 }
     
 

@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiService {
 
     private $url = "https://api.ozae.com";
-    private $key = "key=11116dbf000000000000960d2228e999";
+    private $key = "&key=11116dbf000000000000960d2228e999";
     private $edition = "&edition=fr-fr";
     private $topic = "&topic=s";
 
@@ -109,7 +109,7 @@ class ApiService {
 
     }
     
-    public function getArticleTexted($mot = '', $date = '20190301__20190320'){
+    public function getArticleTexted($mot = '', $date = '20190301__20190323'){
         
         $uri= "/gnw/articles?";
         $date= "date=".$date;
@@ -130,7 +130,7 @@ class ApiService {
 
         // Récupération du contenu retourné par la requête 
         $page_content = json_decode(curl_exec($ch), true);
-        // $this->debug($page_content,true);
+        
         curl_close($ch); 
         return $page_content; 
         
